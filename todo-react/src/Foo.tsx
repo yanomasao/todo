@@ -6,7 +6,7 @@ const Foo = () => {
 
   useEffect(() => {
     axios
-      .get("/api/hello")
+      .get("/api/todo")
       .then((res) => {
         console.log(res.data);
         setApiMessage(res.data);
