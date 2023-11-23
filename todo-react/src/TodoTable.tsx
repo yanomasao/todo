@@ -40,13 +40,13 @@ const TodoTable = () => {
                 </tr>
                 {todos.map((todo) => (
                     <tr key={todo.id}>
-                        <td>{todo['id']}</td>
-                        <td>{todo['title']}</td>
-                        <td>{todo['description']}</td>
-                        <td>{todo['status']}</td>
-                        <td>{todo['created_at']}</td>
-                        <td>{todo['created_by']}</td>
-                        <td>{todo['updated_at']}</td>
+                        <td>{todo.id}</td>
+                        <td>{todo.title}</td>
+                        <td>{todo.description}</td>
+                        <td>{todo.status}</td>
+                        <td>{todo.created_at}</td>
+                        <td>{todo.created_by}</td>
+                        <td>{todo.updated_at}</td>
                     </tr>
                 ))}
             </table>
