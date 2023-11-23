@@ -1,0 +1,12 @@
+$ cargo install cargo-watch
+$ cargo watch -x run
+
+$ npm run dev
+
+cargo runがc
+
+error: linking with `cc` failed: exit status: 1
+
+になる場合は
+
+% xcode-select --install
