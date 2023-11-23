@@ -10,3 +10,7 @@ error: linking with `cc` failed: exit status: 1
 になる場合は
 
 % xcode-select --install
+
+# sea-ormでentityを作成する
+cargo install sea-orm-cli
+DATABASE_URL=postgres://postgres:secret@host.docker.internal:9122/todo sea-orm-cli generate entity -o src/entity
