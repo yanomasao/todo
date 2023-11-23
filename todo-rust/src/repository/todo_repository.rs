@@ -1,4 +1,4 @@
-use crate::entity::todo;
+use crate::entity::todo::{self, Entity, Model};
 use sea_orm::*;
 
 #[derive(Debug, Clone)]
@@ -29,7 +29,20 @@ impl TodoRepository {
     //     println!("FOOO {}", &id);
     //     todo::Entity::find_by_id(id).one(conn).await
     // }
+    pub async fn create(conn: &DatabaseConnection, todo: &Model) -> Result<(), DbErr> {
+        let active_model = todo::ActiveModel {
+            // id: ActiveValue::set(todo.id.clone()),
+            title: Set(todo.title.clone()),
+            description: Set(todo.description.clone()),
+            status: Set("pending".to_string()),
+            created_by: Set("system".to_string()),
+            ..Default::default()
+        };
 
+        active_model.save(conn).await?;
+
+        Ok(())
+    }
     pub async fn list_all(conn: &DatabaseConnection) -> Result<Vec<todo::Model>, DbErr> {
         todo::Entity::find()
             // .filter(menu::Column::ActiveFlg.eq(true))

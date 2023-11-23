@@ -4,6 +4,7 @@ import './App.css'
 import Foo from './Foo'
 import React from 'react'
 import TodoTable from './TodoTable'
+import TodoForm from './TodoForm'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -11,7 +12,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <TodoTable/>
+      <TodoForm/>
+      <TodoTable/>
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <p>Hello Vite + React!</p>
         <p>

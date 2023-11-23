@@ -1,5 +1,5 @@
-use axum::{routing::get, Router, Extension, response::IntoResponse, http::StatusCode};
-use sea_orm::{Database, EntityTrait, DatabaseConnection};
+use axum::{http::StatusCode, response::IntoResponse, routing::get, Extension, Router};
+use sea_orm::{Database, DatabaseConnection, EntityTrait};
 use tower::ServiceBuilder;
 // use crate::entity::todo; // Add this import statement
 // use axum::service::{ServiceBuilder, ServiceExt};
@@ -10,7 +10,9 @@ mod repository;
 
 #[tokio::main]
 async fn main() {
-    let conn = Database::connect("postgres://postgres:secret@host.docker.internal:9122/todo").await.unwrap();
+    let conn = Database::connect("postgres://postgres:secret@host.docker.internal:9122/todo")
+        .await
+        .unwrap();
     // let conn: DatabaseConnection = Database::connect(db).await.unwrap();
     // let todo = todo::Entity::find_by_id(1).one(&db).await.unwrap();
 
