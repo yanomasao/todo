@@ -39,7 +39,7 @@ const TodoTable = () => {
                     <th>updated_at</th>
                 </tr>
                 {todos.map((todo) => (
-                    <tr>
+                    <tr key={todo.id}>
                         <td>{todo['id']}</td>
                         <td>{todo['title']}</td>
                         <td>{todo['description']}</td>
