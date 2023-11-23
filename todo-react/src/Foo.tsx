@@ -2,24 +2,34 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const Foo = () => {
-  const [apiMessage, setApiMessage] = useState(null);
+    const [apiMessage, setApiMessage] = useState(null);
+    // let apiMessage: any = {};
+    // const setApiMessage = (value: any) => {
+    //     apiMessage = value;
+    // };
 
-  useEffect(() => {
-    axios
-      .get("/api/todo")
-      .then((res) => {
-        console.log(res.data);
-        setApiMessage(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  })
-  if (apiMessage === null) {
-    return <div>Loading...</div>;
-  }
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get("/api/todo");
+                console.log(res.data[0]);
+                setApiMessage(res.data[0]);
+            } catch (e) {
+                console.log(e);
+            }
+        };
 
-  return <div>{apiMessage}</div>;
+        fetchData();
+    }, []);
+    console.log(apiMessage)
+
+    if (apiMessage === null) {
+        return <div>Loading...</div>;
+    }
+
+    return <div>{apiMessage['title']}</div>;
+    // return <div>FOOO</div>;
+    // return <div>{JSON.stringify(apiMessage)}</div>;
 };
 
 export default Foo;
