@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  pgsql:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: todo
+      TZ: "Asia/Tokyo"  # ここでタイムゾーンを指定します
+    ports:
+      - "9122:5432"
+    volumes:
+      - ./pgsql/data:/var/lib/postgresql/data
+      - ./pgsql/vol:/vol
+    command:
+      postgres -c stats_temp_directory=/tmp -c log_destination=stderr -c log_statement=all
