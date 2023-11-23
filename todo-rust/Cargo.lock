@@ -2236,7 +2236,9 @@ version = "0.1.0"
 dependencies = [
  "axum",
  "sea-orm",
+ "serde",
  "tokio",
+ "tower",
 ]
 
 [[package]]
