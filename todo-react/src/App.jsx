@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
+import Foo from './Foo'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -8,6 +9,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <Foo/>
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>
         <p>
@@ -15,6 +17,7 @@ function App() {
             count is: {count}
           </button>
         </p>
+        <Foo/>
         <p>
           Edit <code>App.jsx</code> and save to test HMR updates.
         </p>
