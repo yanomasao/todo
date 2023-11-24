@@ -34,8 +34,8 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit, todo }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log(todo);
-      await axios.post("/api/todo/create", todo);
+      console.log(formTodo);
+      await axios.post("/api/todo", formTodo);
       setFormTodo({
         id: 0,
         title: "",

@@ -16,7 +16,7 @@ use crate::repository::todo_repository::TodoRepository;
 pub fn add_route(router: Router, prefix: &str) -> Router {
     router
         .route(&(prefix.to_string() + ""), get(list_all))
-        .route(&(prefix.to_string() + "/create"), post(create)) // Add this line
+        .route(&(prefix.to_string() + ""), post(create)) // Add this line
                                                                 // .route(
                                                                 //     &(prefix.to_string() + "/search/active/:search_word"),
                                                                 //     get(search),
