@@ -30,6 +30,7 @@ const TodoTable = () => {
     return (
         <div>
             <table>
+                <thead>
                 <tr>
                     <th>id</th>
                     <th>title</th>
@@ -38,6 +39,8 @@ const TodoTable = () => {
                     <th>created_at</th>
                     <th>updated_at</th>
                 </tr>
+                </thead>
+                <tbody>
                 {todos.map((todo) => (
                     <tr key={todo.id}>
                         <td>{todo.id}</td>
@@ -49,6 +52,7 @@ const TodoTable = () => {
                         <td>{todo.updated_at}</td>
                     </tr>
                 ))}
+                </tbody>
             </table>
         </div>
     );
