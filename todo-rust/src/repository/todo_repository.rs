@@ -12,7 +12,7 @@ impl TodoRepository {
             title: Set(todo.title.clone()),
             description: Set(todo.description.clone()),
             status: Set("pending".to_string()),
-            active_flg: Set(todo.active_flg.clone()),
+            active_flg: Set(todo.active_flg),
             created_by: Set("system".to_string()),
             ..Default::default()
         };
@@ -23,11 +23,11 @@ impl TodoRepository {
     pub async fn update(conn: &DatabaseConnection, todo: &Model) -> Result<(), DbErr> {
         println!("{:?}", &todo);
         let active_model = todo::ActiveModel {
-            id: Set(todo.id.clone()),
+            id: Set(todo.id),
             title: Set(todo.title.clone()),
             description: Set(todo.description.clone()),
             status: Set("pending".to_string()),
-            active_flg: Set(todo.active_flg.clone()),
+            active_flg: Set(todo.active_flg),
             created_by: Set("system".to_string()),
             updated_by: Set(Some("system".to_string())),
             updated_at: Set(Some(Utc::now().fixed_offset())),
