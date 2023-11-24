@@ -16,14 +16,14 @@ use crate::repository::todo_repository::TodoRepository;
 pub fn add_route(router: Router, prefix: &str) -> Router {
     router
         .route(&(prefix.to_string() + ""), get(list_all))
-        .route(&(prefix.to_string() + ""), post(create)) // Add this line
+        .route(&(prefix.to_string() + ""), post(upsert)) // Add this line
                                                          // .route(
                                                          //     &(prefix.to_string() + "/search/active/:search_word"),
                                                          //     get(search),
                                                          // )
 }
 
-pub async fn create(
+pub async fn upsert(
     // mut req: Request<()>,
     Extension(ref conn): Extension<DatabaseConnection>,
     Json(todo): Json<Model>,
@@ -31,7 +31,16 @@ pub async fn create(
     println!("{:?}", &todo);
     // let todo: Model = req.body_json().await?;
     // let conn = req.ext::<DatabaseConnection>().unwrap();
-    TodoRepository::create(&conn, &todo).await.unwrap();
+    match todo.id {
+        0 => {
+            println!("create");
+            TodoRepository::create(&conn, &todo).await.unwrap();
+        }
+        _ => {
+            println!("update");
+            TodoRepository::update(&conn, &todo).await.unwrap();
+        }
+    }
     // TodoRepository::create(&conn, &todo).await.unwrap();
     // Ok(StatusCode::Created.into())
     Ok(StatusCode::OK)

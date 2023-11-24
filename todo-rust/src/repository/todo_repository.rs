@@ -32,34 +32,33 @@ impl TodoRepository {
     // }
     pub async fn create(conn: &DatabaseConnection, todo: &Model) -> Result<(), DbErr> {
         println!("{:?}", &todo);
-        match todo.id {
-            0 => {
-                let active_model = todo::ActiveModel {
-                    title: Set(todo.title.clone()),
-                    description: Set(todo.description.clone()),
-                    status: Set("pending".to_string()),
-                    active_flg: Set(todo.active_flg.clone()),
-                    created_by: Set("system".to_string()),
-                    ..Default::default()
-                };
-                active_model.save(conn).await?;
-            }
-            _ => {
-                let active_model = todo::ActiveModel {
-                    id: Set(todo.id.clone()),
-                    title: Set(todo.title.clone()),
-                    description: Set(todo.description.clone()),
-                    status: Set("pending".to_string()),
-                    active_flg: Set(todo.active_flg.clone()),
-                    created_by: Set("system".to_string()),
-                    updated_by: Set(Some("system".to_string())),
-                    updated_at: Set(Some(Utc::now().fixed_offset())),
-                    // updated_at: Set(None),
-                    ..Default::default()
-                };
-                active_model.save(conn).await?;
-            }
-        }
+        let active_model = todo::ActiveModel {
+            title: Set(todo.title.clone()),
+            description: Set(todo.description.clone()),
+            status: Set("pending".to_string()),
+            active_flg: Set(todo.active_flg.clone()),
+            created_by: Set("system".to_string()),
+            ..Default::default()
+        };
+        active_model.save(conn).await?;
+        Ok(())
+    }
+
+    pub async fn update(conn: &DatabaseConnection, todo: &Model) -> Result<(), DbErr> {
+        println!("{:?}", &todo);
+        let active_model = todo::ActiveModel {
+            id: Set(todo.id.clone()),
+            title: Set(todo.title.clone()),
+            description: Set(todo.description.clone()),
+            status: Set("pending".to_string()),
+            active_flg: Set(todo.active_flg.clone()),
+            created_by: Set("system".to_string()),
+            updated_by: Set(Some("system".to_string())),
+            updated_at: Set(Some(Utc::now().fixed_offset())),
+            // updated_at: Set(None),
+            ..Default::default()
+        };
+        active_model.save(conn).await?;
         // let active_model = todo::ActiveModel {
         //     id: Set(todo.id.clone()),
         //     title: Set(todo.title.clone()),
