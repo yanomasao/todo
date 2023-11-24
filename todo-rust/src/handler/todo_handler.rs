@@ -17,10 +17,10 @@ pub fn add_route(router: Router, prefix: &str) -> Router {
     router
         .route(&(prefix.to_string() + ""), get(list_all))
         .route(&(prefix.to_string() + ""), post(create)) // Add this line
-                                                                // .route(
-                                                                //     &(prefix.to_string() + "/search/active/:search_word"),
-                                                                //     get(search),
-                                                                // )
+                                                         // .route(
+                                                         //     &(prefix.to_string() + "/search/active/:search_word"),
+                                                         //     get(search),
+                                                         // )
 }
 
 pub async fn create(
@@ -31,7 +31,7 @@ pub async fn create(
     println!("{:?}", &todo);
     // let todo: Model = req.body_json().await?;
     // let conn = req.ext::<DatabaseConnection>().unwrap();
-            TodoRepository::create(&conn, &todo).await.unwrap();
+    TodoRepository::create(&conn, &todo).await.unwrap();
     // TodoRepository::create(&conn, &todo).await.unwrap();
     // Ok(StatusCode::Created.into())
     Ok(StatusCode::OK)

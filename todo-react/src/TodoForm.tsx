@@ -15,6 +15,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit, todo }) => {
     title: "",
     description: null,
     status: "pending",
+    active_flg: true,
     created_by: "",
   });
 
@@ -25,9 +26,12 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit, todo }) => {
   }, [todo]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value =
+      e.target.name === "active_flg" ? e.target.checked : e.target.value;
     setFormTodo({
       ...formTodo,
-      [e.target.name]: e.target.value,
+      // [e.target.name]: e.target.value,
+      [e.target.name]: value,
     });
   };
 
@@ -41,6 +45,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit, todo }) => {
         title: "",
         description: null,
         status: "pending",
+        active_flg: true,
         created_by: "",
       });
       onTodoSubmit();
@@ -78,6 +83,20 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit, todo }) => {
             name="description"
             value={formTodo.description || ""}
             className="form-control form-control-lg"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="col">
+          <div className="mb">
+            <label className="form-label">有効</label>
+          </div>
+        </div>
+        <div className="col">
+          <input
+            type="checkbox"
+            name="active_flg"
+            checked={formTodo.active_flg}
+            className="form-check-input"
             onChange={handleChange}
           />
         </div>

@@ -31,31 +31,36 @@ impl TodoRepository {
     //     todo::Entity::find_by_id(id).one(conn).await
     // }
     pub async fn create(conn: &DatabaseConnection, todo: &Model) -> Result<(), DbErr> {
+        println!("{:?}", &todo);
         match todo.id {
-            0 => {let active_model = todo::ActiveModel {            
-                title: Set(todo.title.clone()),
-                description: Set(todo.description.clone()),
-        status: Set("pending".to_string()),
-                created_by: Set("system".to_string()),
-                ..Default::default()
-            };
-    
-            active_model.save(conn).await?;},
-            _ => {let active_model = todo::ActiveModel {            
-                id: Set(todo.id.clone()),
-                title: Set(todo.title.clone()),
-                description: Set(todo.description.clone()),
-                status: Set("pending".to_string()),
-                created_by: Set("system".to_string()),
-                updated_by: Set(Some("system".to_string())),
-                updated_at: Set(Some(Utc::now().fixed_offset())),
-                // updated_at: Set(None),
-                ..Default::default()
-            };
-    
-            active_model.save(conn).await?;}
+            0 => {
+                let active_model = todo::ActiveModel {
+                    title: Set(todo.title.clone()),
+                    description: Set(todo.description.clone()),
+                    status: Set("pending".to_string()),
+                    active_flg: Set(todo.active_flg.clone()),
+                    created_by: Set("system".to_string()),
+                    ..Default::default()
+                };
+                active_model.save(conn).await?;
+            }
+            _ => {
+                let active_model = todo::ActiveModel {
+                    id: Set(todo.id.clone()),
+                    title: Set(todo.title.clone()),
+                    description: Set(todo.description.clone()),
+                    status: Set("pending".to_string()),
+                    active_flg: Set(todo.active_flg.clone()),
+                    created_by: Set("system".to_string()),
+                    updated_by: Set(Some("system".to_string())),
+                    updated_at: Set(Some(Utc::now().fixed_offset())),
+                    // updated_at: Set(None),
+                    ..Default::default()
+                };
+                active_model.save(conn).await?;
+            }
         }
-        // let active_model = todo::ActiveModel {            
+        // let active_model = todo::ActiveModel {
         //     id: Set(todo.id.clone()),
         //     title: Set(todo.title.clone()),
         //     description: Set(todo.description.clone()),
@@ -72,7 +77,7 @@ impl TodoRepository {
         todo::Entity::find()
             // .filter(menu::Column::ActiveFlg.eq(true))
             .order_by(todo::Column::UpdatedAt, sea_orm::Order::Desc) // Order by created_at in descending order
-        .all(conn)
+            .all(conn)
             .await
     }
 
