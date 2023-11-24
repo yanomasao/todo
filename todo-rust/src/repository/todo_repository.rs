@@ -32,10 +32,13 @@ impl TodoRepository {
     pub async fn create(conn: &DatabaseConnection, todo: &Model) -> Result<(), DbErr> {
         let active_model = todo::ActiveModel {
             // id: ActiveValue::set(todo.id.clone()),
+            // id: Unset(),
+            // id: Set(0), // これがないとエラーになる
             title: Set(todo.title.clone()),
             description: Set(todo.description.clone()),
             status: Set("pending".to_string()),
             created_by: Set("system".to_string()),
+            // created_at: Unset(),
             ..Default::default()
         };
 

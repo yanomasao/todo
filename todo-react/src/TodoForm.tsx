@@ -3,16 +3,17 @@ import axios from "axios";
 import { Todo } from "./if/todo";
 
 const TodoForm: React.FC = () => {
-  // const [todo, setTodo] = useState<Omit<Todo, 'id' | 'created_at' | 'updated_at'>>({
-  const [todo, setTodo] = useState<Todo>({
+    // const [todo, setTodo] = useState<Omit<Todo, 'id' | 'created_at' | 'updated_at' | 'updated_by'>>({
+    const [todo, setTodo] = useState<Omit<Todo, 'created_at' | 'updated_at' | 'updated_by'>>({
+    //   const [todo, setTodo] = useState<Omit<Todo, 'created_at'>>({
     id: 100,
     title: "",
     description: null,
     status: "pending",
-    created_at: new Date().toISOString(),
+    // created_at: new Date().toISOString(),
     created_by: "fff",
-    updated_at: null,
-    updated_by: null,
+    // updated_at: null,
+    // updated_by: null,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,14 +31,14 @@ const TodoForm: React.FC = () => {
       // const res = await axios.get("/api/todo");
       // console.log(res.data);
       setTodo({
-        id: 101,
+        id: 0,
         title: "",
         description: null,
         status: "pending",
         created_by: "",
-        created_at: new Date().toISOString(),
-        updated_by: null,
-        updated_at: null,
+        // created_at: new Date().toISOString(),
+        // updated_by: null,
+        // updated_at: null,
       });
     } catch (err) {
       console.error(err);
