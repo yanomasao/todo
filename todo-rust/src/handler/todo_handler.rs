@@ -1,14 +1,8 @@
-use axum::http::Request;
 use axum::routing::{get, post};
 use axum::Router;
 use sea_orm::entity::prelude::*;
 
-use axum::{
-    extract::{Extension, Path /* Form, Query */},
-    http::StatusCode,
-    response::IntoResponse,
-    Json,
-};
+use axum::{extract::Extension, http::StatusCode, response::IntoResponse, Json};
 
 use crate::entity::todo::Model;
 use crate::repository::todo_repository::TodoRepository;
@@ -16,21 +10,14 @@ use crate::repository::todo_repository::TodoRepository;
 pub fn add_route(router: Router, prefix: &str) -> Router {
     router
         .route(&(prefix.to_string() + ""), get(list_all))
-        .route(&(prefix.to_string() + ""), post(upsert)) // Add this line
-                                                         // .route(
-                                                         //     &(prefix.to_string() + "/search/active/:search_word"),
-                                                         //     get(search),
-                                                         // )
+        .route(&(prefix.to_string() + ""), post(upsert))
 }
 
 pub async fn upsert(
-    // mut req: Request<()>,
     Extension(ref conn): Extension<DatabaseConnection>,
     Json(todo): Json<Model>,
 ) -> Result<impl IntoResponse, StatusCode> {
     println!("{:?}", &todo);
-    // let todo: Model = req.body_json().await?;
-    // let conn = req.ext::<DatabaseConnection>().unwrap();
     match todo.id {
         0 => {
             println!("create");
@@ -41,8 +28,6 @@ pub async fn upsert(
             TodoRepository::update(&conn, &todo).await.unwrap();
         }
     }
-    // TodoRepository::create(&conn, &todo).await.unwrap();
-    // Ok(StatusCode::Created.into())
     Ok(StatusCode::OK)
 }
 

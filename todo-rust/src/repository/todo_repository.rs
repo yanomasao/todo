@@ -1,4 +1,4 @@
-use crate::entity::todo::{self, Entity, Model};
+use crate::entity::todo::{self, Model};
 use sea_orm::*;
 
 #[derive(Debug, Clone)]
@@ -6,30 +6,6 @@ pub struct TodoRepository {}
 use chrono::Utc;
 
 impl TodoRepository {
-    // pub fn new(conn: DatabaseConnection) -> Self {
-    //     MenuRepository { conn }
-    // }
-
-    // pub async fn all(&self) -> Vec<menu::Model> {
-    //     menu::Entity::find().all(&self.conn).await.unwrap()
-    // }
-
-    // pub async fn list_active(conn: &DatabaseConnection) -> Result<Vec<menu::Model>> {
-    //     let rows = menu::Entity::find()
-    //         .filter(menu::Column::ActiveFlg.eq(true))
-    //         .all(conn)
-    //         .await
-    //         .unwrap();
-    //     println!("{:?}", rows);
-    //     Ok(rows)
-    // }
-    // pub async fn find_by_id(
-    //     conn: &DatabaseConnection,
-    //     id: &String,
-    // ) -> Result<Option<todo::Model>, DbErr> {
-    //     println!("FOOO {}", &id);
-    //     todo::Entity::find_by_id(id).one(conn).await
-    // }
     pub async fn create(conn: &DatabaseConnection, todo: &Model) -> Result<(), DbErr> {
         println!("{:?}", &todo);
         let active_model = todo::ActiveModel {
@@ -59,19 +35,10 @@ impl TodoRepository {
             ..Default::default()
         };
         active_model.save(conn).await?;
-        // let active_model = todo::ActiveModel {
-        //     id: Set(todo.id.clone()),
-        //     title: Set(todo.title.clone()),
-        //     description: Set(todo.description.clone()),
-        //     status: Set("pending".to_string()),
-        //     created_by: Set("system".to_string()),
-        //     ..Default::default()
-        // };
-
-        // active_model.save(conn).await?;
 
         Ok(())
     }
+
     pub async fn list_all(conn: &DatabaseConnection) -> Result<Vec<todo::Model>, DbErr> {
         todo::Entity::find()
             // .filter(menu::Column::ActiveFlg.eq(true))
