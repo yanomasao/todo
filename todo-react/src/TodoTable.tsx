@@ -9,7 +9,7 @@ interface TodoTableProps {
 const TodoTable: React.FC<TodoTableProps> = ({ todos, onTodoSelect }) => {
   return (
     <div className="table-responsive">
-      <table className="table fs-6">
+      <table className="table fs-6 table-striped">
         <thead>
           <tr>
             <th>id</th>
