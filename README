@@ -3,7 +3,7 @@ $ cargo watch -x run
 
 $ npm run dev
 
-cargo runがc
+cargo run が c
 
 error: linking with `cc` failed: exit status: 1
 
@@ -11,6 +11,21 @@ error: linking with `cc` failed: exit status: 1
 
 % xcode-select --install
 
-# sea-ormでentityを作成する
+# sea-orm で entity を作成する
+
 cargo install sea-orm-cli
 DATABASE_URL=postgres://postgres:secret@host.docker.internal:9122/todo sea-orm-cli generate entity -o src/entity
+
+# mold のインストール
+
+$ apt update
+$ apt install -y clang
+$ mkdir mold/build
+$ cd mold/build/
+$ git checkout v2.3.3
+$ sudo ../install-build-deps.sh
+$ sudo cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=c++ ..
+$ sudo cmake --build . -j $(nproc)
+$ sudo cmake --build . --target install
+
+$ mold -run cargo watch -x run
