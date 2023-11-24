@@ -3,6 +3,7 @@ use sea_orm::*;
 
 #[derive(Debug, Clone)]
 pub struct TodoRepository {}
+use chrono::Utc;
 
 impl TodoRepository {
     // pub fn new(conn: DatabaseConnection) -> Self {
@@ -30,19 +31,40 @@ impl TodoRepository {
     //     todo::Entity::find_by_id(id).one(conn).await
     // }
     pub async fn create(conn: &DatabaseConnection, todo: &Model) -> Result<(), DbErr> {
-        let active_model = todo::ActiveModel {
-            // id: ActiveValue::set(todo.id.clone()),
-            // id: Unset(),
-            // id: Set(0), // これがないとエラーになる
-            title: Set(todo.title.clone()),
-            description: Set(todo.description.clone()),
-            status: Set("pending".to_string()),
-            created_by: Set("system".to_string()),
-            // created_at: Unset(),
-            ..Default::default()
-        };
+        match todo.id {
+            0 => {let active_model = todo::ActiveModel {            
+                title: Set(todo.title.clone()),
+                description: Set(todo.description.clone()),
+        status: Set("pending".to_string()),
+                created_by: Set("system".to_string()),
+                ..Default::default()
+            };
+    
+            active_model.save(conn).await?;},
+            _ => {let active_model = todo::ActiveModel {            
+                id: Set(todo.id.clone()),
+                title: Set(todo.title.clone()),
+                description: Set(todo.description.clone()),
+                status: Set("pending".to_string()),
+                created_by: Set("system".to_string()),
+                updated_by: Set(Some("system".to_string())),
+                updated_at: Set(Some(Utc::now().naive_utc())),
+                // updated_at: Set(None),
+                ..Default::default()
+            };
+    
+            active_model.save(conn).await?;}
+        }
+        // let active_model = todo::ActiveModel {            
+        //     id: Set(todo.id.clone()),
+        //     title: Set(todo.title.clone()),
+        //     description: Set(todo.description.clone()),
+        //     status: Set("pending".to_string()),
+        //     created_by: Set("system".to_string()),
+        //     ..Default::default()
+        // };
 
-        active_model.save(conn).await?;
+        // active_model.save(conn).await?;
 
         Ok(())
     }

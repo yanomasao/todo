@@ -67,6 +67,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit, todo }) => {
         onChange={handleChange}
       />
       <input type="submit" value="Submit" />
+      <input type="hidden" name="id" value={formTodo.id} />
     </form>
   );
 };
