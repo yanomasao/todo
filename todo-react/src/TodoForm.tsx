@@ -1,25 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Todo } from "./if/todo";
 
 interface TodoFormProps {
   onTodoSubmit: () => void;
+  todo: Todo | null;
 }
 
-const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit }) => {
-  const [todo, setTodo] = useState<
+const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit, todo }) => {
+  const [formTodo, setFormTodo] = useState<
     Omit<Todo, "created_at" | "updated_at" | "updated_by">
   >({
     id: 0,
     title: "",
     description: null,
     status: "pending",
-    created_by: "fff",
+    created_by: "",
   });
 
+  useEffect(() => {
+    if (todo) {
+      setFormTodo(todo);
+    }
+  }, [todo]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTodo({
-      ...todo,
+    setFormTodo({
+      ...formTodo,
       [e.target.name]: e.target.value,
     });
   };
@@ -29,7 +36,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit }) => {
     try {
       console.log(todo);
       await axios.post("/api/todo/create", todo);
-      setTodo({
+      setFormTodo({
         id: 0,
         title: "",
         description: null,
@@ -48,7 +55,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit }) => {
       <input
         type="text"
         name="title"
-        value={todo.title}
+        value={formTodo.title}
         onChange={handleChange}
         required
       />
@@ -56,7 +63,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit }) => {
       <input
         type="text"
         name="description"
-        value={todo.description || ""}
+        value={formTodo.description || ""}
         onChange={handleChange}
       />
       <input type="submit" value="Submit" />

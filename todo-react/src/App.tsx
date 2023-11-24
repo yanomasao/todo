@@ -8,6 +8,7 @@ import axios from "axios";
 
 function App() {
   const [todos, setTodos] = useState<Todo[]>([]);
+  const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
   const [reload, setReload] = useState(true);
 
   const fetchTodos = async () => {
@@ -29,11 +30,16 @@ function App() {
     setReload(true);
   };
 
+  const setSelectedTodo2 = (todo: Todo) => {
+    console.log("setSelectedTodo2");
+    setSelectedTodo(todo);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <TodoForm onTodoSubmit={handleTodoSubmit} />
-        <TodoTable todos={todos} />
+        <TodoForm onTodoSubmit={handleTodoSubmit} todo={selectedTodo} />
+        <TodoTable todos={todos} onTodoSelect={setSelectedTodo2} />
       </header>
     </div>
   );

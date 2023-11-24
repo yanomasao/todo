@@ -3,9 +3,10 @@ import { Todo } from "./if/todo";
 
 interface TodoTableProps {
   todos: Todo[];
+  onTodoSelect: (todo: Todo) => void;
 }
 
-const TodoTable: React.FC<TodoTableProps> = ({ todos }) => {
+const TodoTable: React.FC<TodoTableProps> = ({ todos, onTodoSelect }) => {
   return (
     <div>
       <table>
@@ -21,8 +22,8 @@ const TodoTable: React.FC<TodoTableProps> = ({ todos }) => {
         </thead>
         <tbody>
           {todos.map((todo) => (
-            <tr key={todo.id}>
-              <td>{todo.id}</td>
+            <tr key={todo.id} onClick={() => onTodoSelect(todo)}>
+              <td onClick={() => onTodoSelect(todo)}>{todo.id}</td>
               <td>{todo.title}</td>
               <td>{todo.description}</td>
               <td>{todo.status}</td>
