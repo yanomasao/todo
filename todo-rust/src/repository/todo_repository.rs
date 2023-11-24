@@ -49,7 +49,8 @@ impl TodoRepository {
     pub async fn list_all(conn: &DatabaseConnection) -> Result<Vec<todo::Model>, DbErr> {
         todo::Entity::find()
             // .filter(menu::Column::ActiveFlg.eq(true))
-            .all(conn)
+            .order_by(todo::Column::CreatedAt, sea_orm::Order::Desc) // Order by created_at in descending order
+        .all(conn)
             .await
     }
 
