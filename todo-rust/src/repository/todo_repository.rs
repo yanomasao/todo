@@ -48,7 +48,7 @@ impl TodoRepository {
                 status: Set("pending".to_string()),
                 created_by: Set("system".to_string()),
                 updated_by: Set(Some("system".to_string())),
-                updated_at: Set(Some(Utc::now().naive_utc())),
+                updated_at: Set(Some(Utc::now().fixed_offset())),
                 // updated_at: Set(None),
                 ..Default::default()
             };
@@ -71,7 +71,7 @@ impl TodoRepository {
     pub async fn list_all(conn: &DatabaseConnection) -> Result<Vec<todo::Model>, DbErr> {
         todo::Entity::find()
             // .filter(menu::Column::ActiveFlg.eq(true))
-            .order_by(todo::Column::CreatedAt, sea_orm::Order::Desc) // Order by created_at in descending order
+            .order_by(todo::Column::UpdatedAt, sea_orm::Order::Desc) // Order by created_at in descending order
         .all(conn)
             .await
     }
