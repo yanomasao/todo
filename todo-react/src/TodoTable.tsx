@@ -8,8 +8,8 @@ interface TodoTableProps {
 
 const TodoTable: React.FC<TodoTableProps> = ({ todos, onTodoSelect }) => {
   return (
-    <div>
-      <table>
+    <div className="table-responsive">
+      <table className="table">
         <thead>
           <tr>
             <th>id</th>
@@ -17,7 +17,9 @@ const TodoTable: React.FC<TodoTableProps> = ({ todos, onTodoSelect }) => {
             <th>description</th>
             <th>status</th>
             <th>created_at</th>
+            <th>created_by</th>
             <th>updated_at</th>
+            <th>updated_by</th>
           </tr>
         </thead>
         <tbody>
@@ -30,6 +32,7 @@ const TodoTable: React.FC<TodoTableProps> = ({ todos, onTodoSelect }) => {
               <td>{todo.created_at}</td>
               <td>{todo.created_by}</td>
               <td>{todo.updated_at}</td>
+              <td>{todo.updated_by}</td>
             </tr>
           ))}
         </tbody>
