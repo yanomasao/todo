@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Todo } from "./if/todo";
+import "./TableForm.css";
 
 interface TodoFormProps {
   onTodoSubmit: () => void;
@@ -55,14 +56,10 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit, todo }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-3">
-      <div className="row">
-        <div className="col">
-          <div className="mb-3">
-            <label className="form-label">タイトル</label>
-          </div>
-        </div>
-        <div className="col">
+    <form onSubmit={handleSubmit} className="form-horizontal col-8">
+      <div className="form-group row">
+        <label className="col-md-2 control-label">タイトル</label>
+        <div className="col-md-8">
           <input
             type="text"
             name="title"
@@ -72,26 +69,22 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit, todo }) => {
             className="form-control"
           />
         </div>
-        <div className="col">
-          <div className="mb">
-            <label className="form-label">説明</label>
-          </div>
-        </div>
-        <div className="col">
+      </div>
+      <div className="form-group row">
+        <label className="col-md-2 control-label">説明</label>
+        <div className="col-md-10">
           <input
             type="text"
             name="description"
             value={formTodo.description || ""}
-            className="form-control form-control-lg"
+            className="form-control form-control"
             onChange={handleChange}
           />
         </div>
-        <div className="col">
-          <div className="mb">
-            <label className="form-label">有効</label>
-          </div>
-        </div>
-        <div className="col">
+      </div>
+      <div className="form-group row">
+        <label className="col-md-2 control-label">有効</label>
+        <div className="col-md-1">
           <input
             type="checkbox"
             name="active_flg"
