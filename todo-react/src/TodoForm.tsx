@@ -51,26 +51,36 @@ const TodoForm: React.FC<TodoFormProps> = ({ onTodoSubmit, todo }) => {
 
   return (
     <form onSubmit={handleSubmit} className="mb-3">
-      <div className="mb-3">
-        <label className="form-label">タイトル</label>
-        <input
-          type="text"
-          name="title"
-          value={formTodo.title}
-          onChange={handleChange}
-          required
-          className="form-control"
-        />
-      </div>
-      <div className="mb-3">
-        <label className="form-label">説明</label>
-        <input
-          type="text"
-          name="description"
-          value={formTodo.description || ""}
-          className="form-control"
-          onChange={handleChange}
-        />
+      <div className="row">
+        <div className="col">
+          <div className="mb-3">
+            <label className="form-label">タイトル</label>
+          </div>
+        </div>
+        <div className="col">
+          <input
+            type="text"
+            name="title"
+            value={formTodo.title}
+            onChange={handleChange}
+            required
+            className="form-control"
+          />
+        </div>
+        <div className="col">
+          <div className="mb">
+            <label className="form-label">説明</label>
+          </div>
+        </div>
+        <div className="col">
+          <input
+            type="text"
+            name="description"
+            value={formTodo.description || ""}
+            className="form-control form-control-lg"
+            onChange={handleChange}
+          />
+        </div>
       </div>
       <button type="submit" className="btn btn-primary">
         Submit
